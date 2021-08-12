@@ -2,7 +2,7 @@
   "name": "tailwind-template-project",
   "version": "0.0.1",
   "main": "./dist/index.html",
-  "packageManager": "yarn@3.0.0",
+  "packageManager": "yarn@3.0.1",
   "scripts": {
     "build-dev": "NODE_ENV=development && gulp build",
     "build-prod": "NODE_ENV=production && gulp build",
@@ -29,5 +29,8 @@
     "gulp-terser": "^2.0.1",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.7"
+  },
+  "dependencies": {
+    "yarn": "^1.22.11"
   }
 }
