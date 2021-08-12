@@ -53,6 +53,7 @@
 <body data-app="home" class="w-full h-screen flex items-center justify-center">
 
   <div>
+    <h2 class="text-2xl mb-8 text-center font-bold">Upload your CSV file</h2>
     <form id="myForm" class="flex flex-col h-24 justify-between">
       <input type="file" id="csvFile" accept=".csv" />
       <input type="submit" value="Submit" class="cursor-pointer py-2 rounded-full bg-gray-800 hover:bg-gray-600 text-white transition duration-300"/>
@@ -78,14 +79,14 @@
           const data = csvToArray(text);
 
           // document.write(JSON.stringify(data));
-          console.log(data)
+          console.log(data);
 
         };
 
         reader.readAsText(input);
       } catch (e) {
-        console.error( "You need to upload a file first.", e)
-      }
+        console.error( "You need to upload a file first.", e);
+      };
 
     });
 
