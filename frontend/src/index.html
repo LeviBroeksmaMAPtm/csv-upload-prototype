@@ -50,17 +50,59 @@
 
 </head>
 
-<body data-app="home" class="w-full h-screen flex items-center justify-center">
-
-  <div>
-    <h2 class="text-2xl mb-8 text-center font-bold">Upload your CSV file</h2>
-    <form id="myForm" class="flex flex-col h-24 justify-between">
-      <input type="file" id="csvFile" accept=".csv" />
-      <input type="submit" value="Submit" class="cursor-pointer py-2 rounded-full bg-gray-800 hover:bg-gray-600 text-white transition duration-300"/>
-    </form>
+<body data-app="home" class="w-full min-h-screen flex flex-col items-center justify-center">
+  <div class="w-full text-center mb-64">
+    <a href="/twee" class=" bg-red-600 py-2 px-4 text-white">Next</a>
   </div>
+  <div>
+    <div class="grid grid-cols-2 w-full max-w-4xl gap-4">
+      <!-- UPLOAD FORM -->
+      <div class="max-w-lg">
+        <h2 class="text-2xl mb-8 text-center font-bold">Upload your CSV file</h2>
+        <form id="myForm" @submit="submitHandler(eZZZ)" class="flex flex-col h-24 justify-between">
+          <input type="file" id="csvFile" accept=".csv" />
+          <input type="submit" value="Submit"
+            class="cursor-pointer py-2 rounded-full bg-gray-800 hover:bg-gray-600 text-white transition duration-300" />
+        </form>
+      </div>
+      <!-- PREVIEW HOLDER -->
+      <div>
+        <table class="bg-gray-800 rounded-lg p-8">
+          <!-- PREVIEW CSV IS LOADED HERE -->
+          <thead class="border-b border-white">
+            <th class="text-gray-50 px-4 py-2 text-left">
+              <span>Longitude</span>
+            </th>
+            <th class="text-gray-50 px-4 py-2 text-left">
+              <span>Latitude</span>
+            </th>
+            <th class="text-gray-50 px-4 py-2 text-left">
+              <span>Modaliteit</span>
+            </th>
+            <th class="text-gray-50 px-4 py-2 text-left">
+              <span>ID</span>
+            </th>
+            <th class="text-gray-50 px-4 py-2 text-left">
+              <span>Naam</span>
+            </th>
+          </thead>
+          <tbody id="previewUploadedCsv"></tbody>
+        </table>
+        <tbody>
+          <template>
+            <tr>
+              <td class="text-red-800" x-text="dataRow.longitude"></td>
+              <td class="text-red-800" x-text="dataRow.latitude"></td>
+              <td class="text-red-800" x-text="dataRow.modaliteit"></td>
+              <td class="text-red-800" x-text="dataRow.id"></td>
+              <td class="text-red-800" x-text="dataRow.naam"></td>
+            </tr>
+          </template>
+        </tbody>
+      </div>
+    </div>
 
-
+  </div>
 
   <script>
     const myForm = document.getElementById("myForm");
@@ -71,24 +113,69 @@
         e.preventDefault();
 
         const input = csvFile.files[0];
-
         const reader = new FileReader();
 
         reader.onload = function (e) {
           const text = e.target.result;
           const data = csvToArray(text);
 
-          // document.write(JSON.stringify(data));
-          console.log(data);
+          // data.map(dataRow => {
+          //   // find container
+          //   const rowContainer = document.getElementById('previewUploadedCsv');
 
+          //   // create tr for container
+          //   const newArrayRow = document.createElement('tr');
+          //   newArrayRow.setAttribute('class', 'border-b border-gray-50');
+
+          //   // add tr to container
+          //   const docFragment = document.createDocumentFragment();
+          //   docFragment.appendChild(newArrayRow);
+
+          //   // create new td longitude
+          //   const longitude = document.createElement('td');
+          //   const latitude = document.createElement('td');
+          //   const modaliteit = document.createElement('td');
+          //   const id = document.createElement('td');
+          //   const naam = document.createElement('td');
+
+          //   // define content td
+          //   longitude.textContent = dataRow.longitude;
+          //   latitude.textContent = dataRow.latitude;
+          //   modaliteit.textContent = dataRow.modaliteit;
+
+          //   // Check if empty, if so, replace with n.v.t.
+          //   id.textContent = dataRow.id !="" ? dataRow.id : "n.v.t.";
+          //   naam.textContent = dataRow.naam !="" ? dataRow.naam : "n.v.t.";
+
+          //   // add styling to td
+          //   latitude.setAttribute('class', 'text-gray-50 px-4 py-1');
+          //   modaliteit.setAttribute('class', 'text-gray-50 px-4 py-1');
+          //   id.setAttribute('class', 'text-gray-50 px-4 py-1');
+          //   naam.setAttribute('class', 'text-gray-50 px-4 py-1');
+
+          //   // add content to tr
+          //   longitude.setAttribute('class', 'text-gray-50 px-4 py-1');
+          //   newArrayRow.appendChild(longitude);
+          //   newArrayRow.appendChild(latitude);
+          //   newArrayRow.appendChild(modaliteit);
+          //   newArrayRow.appendChild(id);
+
+          //   newArrayRow.appendChild(naam);
+
+          //   // add complete tr to table
+          //   rowContainer.appendChild(docFragment);
+
+          // })
+          console.log(data);
         };
+
 
         reader.readAsText(input);
       } catch (e) {
-        console.error( "You need to upload a file first.", e);
+        console.error("You need to upload a file first.", e);
       };
-
     });
+
 
     function csvToArray(str, delimeter = ",") {
       // split up the csv data of the first row as headers:
@@ -110,9 +197,78 @@
       return arr;
     }
   </script>
+  <!-- <script>
+    window.dataTable = () => {
+      return {
+        dataArr: [{
+          longitude: 0,
+          latitude: 0,
+          modaliteit: 0,
+          id: 0,
+          naam: 0
+        },
+        {
+          longitude: 0,
+          latitude: 0,
+          modaliteit: 0,
+          id: 0,
+          naam: 0
+        }],
+
+        init() {
+          // const myForm = document.getElementById("myForm");
+          // const csvFile = document.getElementById("csvFile");
+
+        },
+
+        csvToArray(str, delimeter = ",") {
+          // split up the csv data of the first row as headers:
+          const headers = str.slice(0, str.indexOf("\n")).split(delimeter);
+          // split up the csv data of the rows, devided per row
+          const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+          const arr = rows.map(function (row) {
+            const values = row.split(delimeter);
+
+            const el = headers.reduce(function (object, header, index) {
+              object[header] = values[index];
+              return object;
+            }, {});
+
+            return el;
+
+          })
+          return arr;
+        },
+
+        submitHandler() {
+          try {
+            e.preventDefault();
+
+            const input = document.getElementById("csvFile").files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+              const text = e.target.result;
+              const data = csvToArray(text);
+              this.dataArr = data;
+            };
+
+            reader.readAsText(input);
+          }
+          // catch (e) {
+          //   console.error("You need to upload a file first.", e);
+          // };
+        }
+      }
+    }
+
+
+  </script> -->
 
   <!-- Alpine.js dependencies -->
   <script src="./_imports/alpine_func_footer.min.js"></script>
+
   <!-- <script src="./alpine_func_users.min.js"></script> -->
   <!-- <script src="./alpine_func_projects.min.js"></script> -->
 </body>
