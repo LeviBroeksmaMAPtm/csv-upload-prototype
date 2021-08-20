@@ -51,58 +51,76 @@
 
 </head>
 
-<body data-app="home" class="w-full min-h-screen flex items-center flex-col justify-center">
-  <div class="w-full text-center mb-64">
-    <a href="/" class=" bg-red-600 py-2 px-4 text-white">Plain JavaScript</a>
-  </div>
-  <div x-data="csvParser()">
-    <div class="flex flex-col justify-center items-center w-full max-w-4xl gap-4">
-      <!-- UPLOAD FORM -->
-      <div class="max-w-lg">
-        <h2 class="text-2xl mb-8 text-center font-bold">Upload your CSV file</h2>
+<body data-app="home" class="w-full min-h-screen flex flex-col bg-gray-200">
+  <header class="py-8 h-24 bg-gray-400">
+    <div class="w-full text-center mb-64">
+      <a href="/" class=" bg-red-600 py-2 px-4 text-white">Plain JavaScript</a>
+    </div>
+  </header>
 
-        <form @submit.prevent="submit" id="myForm" class="flex flex-col h-24 justify-between">
-          <input type="file" id="csvFile" accept=".csv" />
-          <input id="btn-upload" type="submit"
-            class="cursor-pointer hover:bg-gray-500 transition duration-300 hover:text-blue-500" />
-        </form>
-      </div>
-      <div>
-        <table class="bg-gray-900 text-white rounded-lg">
-          <thead>
-            <tr class="border-b border-white">
-              <th class="px-4 py-2 text-left">
-                Longitude
-              </th>
-              <th class="px-4 py-2 text-left">
-                Latitude
-              </th>
-              <th class="px-4 py-2 text-left">
-                Modaliteit
-              </th>
-              <th class="px-4 py-2 text-left">
-                ID
-              </th>
-              <th class="px-4 py-2 text-left">
-                Naam
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <template x-for="(row, index) in tempArr" :key="index">
+  <main class="h-full py-24 px-12">
+    <div x-data="csvParser()">
+      <div class="flex justify-center w-full gap-4 ">
+        <!-- UPLOAD FORM -->
+        <div class="bg-gray-50 box-content p-8 rounded-lg">
+          <h2 class="text-2xl mb-8 font-bold">Upload jouw CSV</h2>
+
+          <form @submit.prevent="submit" id="myForm" class="flex flex-col h-24 justify-between">
+            <input type="file" id="csvFile" accept=".csv" />
+            <input id="btn-upload" type="submit" value="Upload je CSV"
+              class=" items-center px-4 py-2 text-center text-sm leading-5 font-medium rounded-md text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:shadow-outline-green focus:border-teal-700 active:bg-teal-700 transition duration-150 ease-in-out" />
+          </form>
+
+        </div>
+
+        <div class="relative h-full bg-gray-50 rounded-b-lg overflow-hidden">
+          <div class="bg-gray-600 rounded-t-lg px-8 py-6 text-white">
+            <h2 class="text-lg font-medium leading-6 text-gray-100 sm:truncate">Preview</h2>
+            <p class="mt-1 text-sm leading-5 text-gray-300">Hieronder zie je een preview van de ge-uploade CSV. Dubbele regels zijn gefilterd en verwijdert zodat enkel unieke regels worden toegevoegd wanneer je de CSV opslaat.</p>
+          </div>
+          <table class="min-w-full divide-y divide-gray-200 rounded-b-lg">
+            <thead>
               <tr class="border-b border-white">
-                <td x-text="row.longitude" class="px-4 py-1"></td>
-                <td x-text="row.latitude" class="px-4 py-1"></td>
-                <td x-text="row.modaliteit" class="px-4 py-1"></td>
-                <td x-text="row.id != '' ? row.id : 'n.v.t.' " class="px-4 py-1"></td>
-                <td x-text="row.naam != '' ? row.naam : 'n.v.t.' " class="px-4 py-1"></td>
+                <th
+                  class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                  Longitude
+                </th>
+                <th
+                  class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                  Latitude
+                </th>
+                <th
+                  class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                  Modaliteit
+                </th>
+                <th
+                  class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                  ID
+                </th>
+                <th
+                  class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                  Naam
+                </th>
               </tr>
-            </template>
-          </tbody>
-        </table>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <template x-for="(row, index) in tempArr" :key="index">
+                <tr class="border-b border-white">
+                  <td x-text="row.longitude" class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 font-bold text-left sm:px-6 lg:px-8"></td>
+                  <td x-text="row.latitude" class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 font-bold text-left sm:px-6 lg:px-8"></td>
+                  <td x-text="row.modaliteit" class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 font-bold text-left sm:px-6 lg:px-8"></td>
+                  <td x-text="row.id != '' ? row.id : 'n.v.t.' "
+                    class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-left sm:px-6 lg:px-8"></td>
+                  <td x-text="row.naam != '' ? row.naam : 'n.v.t.' "
+                    class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-left sm:px-6 lg:px-8"></td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <script type='text/javascript'>
     window.csvParser = () => {
@@ -115,15 +133,21 @@
             newline: "\n",
             skipEmptyLines: true,
             complete: results => {
-              this.tempArr = results.data;
+              const arrToBeFiltered = results.data,
+                filtered = arrToBeFiltered.filter((a) => {
+                  const key = a.longitude + '|' + a.latitude + '|' + a.modaliteit;
+                  if (!this[key]) {
+                    this[key] = true;
+                    return true;
+                  }
+                }, Object.create(null))
+              this.tempArr = filtered;
             }
           });
         }
       }
     };
-
   </script>
-
 
   <!-- Alpine.js dependencies -->
   <script src="../../_imports/alpine_func_footer.min.js"></script>
