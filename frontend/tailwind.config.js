@@ -28,6 +28,10 @@ module.exports = {
     }
   },
   variants: {
+    extend: {
+      opacity: ['disabled'],
+      cursor: ['disabled']
+    },
     backgroundColor: ['responsive', 'hover', 'focus', 'active'],
     display: ({ after }) => after(['group-hover']),
     opacity: ({ after }) => after(['group-hover']),
