@@ -239,39 +239,9 @@
       </div>
   </main>
 
-  <script type='text/javascript'>
-    // CSV parser
-    let canBeUploaded = false;
-
-
-
-    // Leaflet map
-    let mymap = L.map('mapid').setView([52.37, 4.91], 13);
-
-    let atributionCard = '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
-
-    L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=tZS8oEMabH7RTxEUbJxB', {
-      attribution: atributionCard,
-    }).addTo(mymap);
-
-    // L.control.layers([this.lg_walk]).addTo(mymap);
-
-    document.getElementById('confirmation-btn').disabled = true;
-    document.getElementById('btn-upload').disabled = true;
-
-    function toggleDisableUpload() {
-      const button = document.getElementById('btn-upload');
-      button.disabled = false;
-    }
-
-  </script>
-
   <!-- Alpine.js dependencies -->
   <script src="../../_imports/alpine_func_footer.min.js"></script>
   <script src="./alpine_func_twee.min.js"></script>
-
-  <!-- <script src="./alpine_func_users.min.js"></script> -->
-  <!-- <script src="./alpine_func_projects.min.js"></script> -->
 </body>
 
 </html>
