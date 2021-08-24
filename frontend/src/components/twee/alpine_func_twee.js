@@ -10,6 +10,8 @@ window.csvParser = () => {
     tempArr: [],
     tempCar: [],
 
+    canBeUploaded: false,
+
     map01: new L.map('map01', {
       // dragging: !L.Browser.mobile,
       // tap: !L.Browser.mobile,
@@ -23,6 +25,9 @@ window.csvParser = () => {
     fg_walk: new L.FeatureGroup(),
 
     init() {
+      document.getElementById('confirmation-btn').disabled = true;
+      document.getElementById('btn-upload').disabled = true;
+
       this.init_map();
     },
 
