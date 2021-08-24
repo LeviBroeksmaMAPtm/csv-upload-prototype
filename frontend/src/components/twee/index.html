@@ -245,6 +245,7 @@
     window.csvParser = () => {
       return {
         tempArr: [],
+        tempCar: [],
         submit() {
           Papa.parse(document.getElementById('csvFile').files[0], {
             header: true,
@@ -262,7 +263,7 @@
                 }, Object.create(null));
               this.tempArr = filtered;
 
-              // filter the filtered array and add longitude, latitude and modaliteit to new geoArray
+              // create and add longitude, latitude and modaliteit to new geoArray
               const geoArr = [];
 
               filtered.map(filterRow => {
@@ -274,72 +275,66 @@
 
                 } else {
                   document.getElementById("incorrect-csv").classList.remove('hidden');
-
                 }
-                console.log(filterRow);
-              });
+              }); // End filtered.map()
 
-              // map new geoArr and create markers for eacht row
-              const geoArrToShow = [];
-
+              // map the geoArr to create the correct markers based on modaliteit
               geoArr.map(geoArrRow => {
                 const coordinates = [geoArrRow.longitude, geoArrRow.latitude];
                 const modaliteit = geoArrRow.modaliteit;
 
-                if (modaliteit == 'fiets') {
+
+                if (modaliteit === 'fiets') {
                   const lonlatToAdd = L.circleMarker(coordinates, {
                     color: 'gray',
                     fillColor: 'gray',
                     fillOpacity: 0.5,
                     radius: 50
                   }).bindPopup('Telpunt: ' + modaliteit);
-                  const countPoints = L.layerGroup([lonlatToAdd]).addTo(mymap);
-                } else if (modaliteit == 'auto') {
+                  const lg_bike = L.layerGroup([lonlatToAdd]).addTo(mymap);
+                }
+                if (modaliteit === 'auto') {
                   const lonlatToAdd = L.circleMarker(coordinates, {
                     color: 'blue',
                     fillColor: 'blue',
                     fillOpacity: 0.5,
                     radius: 50
                   }).bindPopup('Telpunt: ' + modaliteit);
-                  const countPoints = L.layerGroup([lonlatToAdd]).addTo(mymap);
-                } else {
+                  const lg_car = L.layerGroup([lonlatToAdd]).addTo(mymap);
+                }
+                if (modaliteit === 'voetganger') {
                   const lonlatToAdd = L.circle(coordinates, {
                     color: 'red',
                     fillColor: 'red',
                     fillOpacity: 0.5,
                     radius: 50
                   }).bindPopup('Telpunt: ' + modaliteit);
-                  const countPoints = L.layerGroup([lonlatToAdd]).addTo(mymap);
+                  const lg_walk = L.layerGroup([lonlatToAdd]).addTo(mymap);
+
                 }
-              });
-            }
-          });
-        }
-      }
+              }); // End geoArr.map()
+            } // End complete: property
+          }); // End papa.parse
+
+        } // End submit()
+      } // End return
     };
+
 
     // Leaflet map
     let mymap = L.map('mapid').setView([52.37, 4.91], 13);
+
     let atributionCard = '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
 
     L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=tZS8oEMabH7RTxEUbJxB', {
       attribution: atributionCard,
     }).addTo(mymap);
 
-    // Disable button as long as there has no file been uploaded
-    // Save button
+    // L.control.layers([this.lg_walk]).addTo(mymap);
+
     document.getElementById('confirmation-btn').disabled = true;
-    // function uploadCsvForPreview() {
-    //   if (canBeUploaded === true) {
-    //     const button = document.getElementById('confirmation-btn');
-    //     button.disabled = false;
-    //   } else {
-    //     const button = document.getElementById('confirmation-btn');
-    //     button.disabled = true;
-    //   }
-    // }
-    // Upload button
     document.getElementById('btn-upload').disabled = true;
+
     function toggleDisableUpload() {
       const button = document.getElementById('btn-upload');
       button.disabled = false;
