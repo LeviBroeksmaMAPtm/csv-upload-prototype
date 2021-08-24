@@ -78,24 +78,20 @@
         <div class="bg-gray-50 box-content flex flex-col justify-center px-8 rounded-lg shadow-lg">
           <div class="flex flex-col h-full justify-start my-8">
             <h2 class="text-2xl mb-8 font-bold">Upload jouw CSV</h2>
-
             <form @submit.prevent="submit" id="myForm" class="flex flex-col h-24 justify-between">
               <input type="file" id="csvFile" accept=".csv" @click="toggleDisableUpload()" />
-              <input id="btn-upload" type="submit" value="Upload je CSV" @click="uploadCsvForPreview()"
+              <input id="btn-upload" type="submit" value="Upload je CSV"
                 class=" items-center px-4 py-2 text-center text-sm leading-5 font-medium rounded-md text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:shadow-outline-green focus:border-teal-700 active:bg-teal-700 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"" />
             </form>
-
           </div>
         </div>
-
 
         <div class=" relative h-full w-full bg-gray-50 rounded-b-lg overflow-hidden shadow-lg">
               <div class="bg-gray-600 rounded-t-lg px-8 py-6 text-white">
                 <h2 class="text-lg font-medium leading-6 text-gray-100 sm:truncate">Preview</h2>
                 <p class="mt-1 text-sm leading-5 text-gray-300">Hieronder zie je een preview van de ge-uploade CSV.
-                  Dubbele
-                  regels zijn gefilterd en verwijdert zodat enkel unieke regels worden toegevoegd wanneer je de CSV
-                  opslaat.
+                  Dubbele regels zijn gefilterd en verwijdert zodat enkel unieke regels worden toegevoegd wanneer je de
+                  CSV opslaat.
                 </p>
               </div>
               <table class="min-w-full divide-y divide-gray-200 rounded-b-lg">
@@ -203,40 +199,16 @@
           </div>
         </div>
         <!-- TEST -->
-        <!-- This example requires Tailwind CSS v2.0+ -->
         <div class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog"
           aria-modal="true" id="incorrect-csv">
           <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <!--
-      Background overlay, show/hide based on modal state.
-
-      Entering: "ease-out duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-      Leaving: "ease-in duration-200"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
             <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
-            <!-- This element is to trick the browser into centering the modal contents. -->
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-            <!--
-      Modal panel, show/hide based on modal state.
-
-      Entering: "ease-out duration-300"
-        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        To: "opacity-100 translate-y-0 sm:scale-100"
-      Leaving: "ease-in duration-200"
-        From: "opacity-100 translate-y-0 sm:scale-100"
-        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-    -->
             <div
               class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
               <div>
                 <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
-                  <!-- Heroicon name: outline/check -->
                   <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -249,7 +221,8 @@
                   </h3>
                   <div class="mt-2">
                     <p class="text-sm text-gray-500">
-                      Controlleer de CSV, de velden <strong>longitude</strong>, <strong>latitude</strong> en <strong>modaliteit</strong> mogen niet leeg zijn.
+                      Controlleer de CSV, de velden <strong>longitude</strong>, <strong>latitude</strong> en
+                      <strong>modaliteit</strong> mogen niet leeg zijn.
                     </p>
                   </div>
                 </div>
@@ -296,10 +269,12 @@
                 if (filterRow.longitude != "" && filterRow.latitude != "" && filterRow.modaliteit != "") {
                   lonlat = { longitude: filterRow.longitude, latitude: filterRow.latitude, modaliteit: filterRow.modaliteit };
                   geoArr.push(lonlat);
-                  canBeUploaded = true;
+                  const button = document.getElementById('confirmation-btn');
+                  button.disabled = false;
+
                 } else {
-                  // document.getElementById('incorrect-csv').className = "fixed z-10 inset-0 overflow-y-auto"
-                  document.getElementById("incorrect-csv").classList.remove('hidden')
+                  document.getElementById("incorrect-csv").classList.remove('hidden');
+
                 }
                 console.log(filterRow);
               });
@@ -354,15 +329,15 @@
     // Disable button as long as there has no file been uploaded
     // Save button
     document.getElementById('confirmation-btn').disabled = true;
-    function uploadCsvForPreview() {
-      if (canBeUploaded === true) {
-        const button = document.getElementById('confirmation-btn');
-        button.disabled = false;
-      } else {
-        const button = document.getElementById('confirmation-btn');
-        button.disabled = true;
-      }
-    }
+    // function uploadCsvForPreview() {
+    //   if (canBeUploaded === true) {
+    //     const button = document.getElementById('confirmation-btn');
+    //     button.disabled = false;
+    //   } else {
+    //     const button = document.getElementById('confirmation-btn');
+    //     button.disabled = true;
+    //   }
+    // }
     // Upload button
     document.getElementById('btn-upload').disabled = true;
     function toggleDisableUpload() {
