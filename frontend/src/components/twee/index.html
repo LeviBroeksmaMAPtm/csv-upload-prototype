@@ -76,7 +76,7 @@
         <!-- UPLOAD FORM -->
 
         <div class="bg-gray-50 box-content flex flex-col justify-center px-8 rounded-lg shadow-lg">
-          <div class="flex flex-col h-full justify-start mt-8">
+          <div class="flex flex-col h-full justify-start my-8">
             <h2 class="text-2xl mb-8 font-bold">Upload jouw CSV</h2>
 
             <form @submit.prevent="submit" id="myForm" class="flex flex-col h-24 justify-between">
@@ -90,123 +90,185 @@
 
 
         <div class=" relative h-full w-full bg-gray-50 rounded-b-lg overflow-hidden shadow-lg">
-            <div class="bg-gray-600 rounded-t-lg px-8 py-6 text-white">
-              <h2 class="text-lg font-medium leading-6 text-gray-100 sm:truncate">Preview</h2>
-              <p class="mt-1 text-sm leading-5 text-gray-300">Hieronder zie je een preview van de ge-uploade CSV.
-                Dubbele
-                regels zijn gefilterd en verwijdert zodat enkel unieke regels worden toegevoegd wanneer je de CSV
-                opslaat.
-              </p>
-            </div>
-            <table class="min-w-full divide-y divide-gray-200 rounded-b-lg">
-              <thead>
-                <tr class="border-b border-white">
-                  <th
-                    class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
-                    Longitude
-                  </th>
-                  <th
-                    class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
-                    Latitude
-                  </th>
-                  <th
-                    class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
-                    Modaliteit
-                  </th>
-                  <th
-                    class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
-                    ID
-                  </th>
-                  <th
-                    class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
-                    Naam
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="bg-white divide-y divide-gray-200" id="table-body">
-                <template x-for="(row, index) in tempArr" :key="index">
+              <div class="bg-gray-600 rounded-t-lg px-8 py-6 text-white">
+                <h2 class="text-lg font-medium leading-6 text-gray-100 sm:truncate">Preview</h2>
+                <p class="mt-1 text-sm leading-5 text-gray-300">Hieronder zie je een preview van de ge-uploade CSV.
+                  Dubbele
+                  regels zijn gefilterd en verwijdert zodat enkel unieke regels worden toegevoegd wanneer je de CSV
+                  opslaat.
+                </p>
+              </div>
+              <table class="min-w-full divide-y divide-gray-200 rounded-b-lg">
+                <thead>
                   <tr class="border-b border-white">
-                    <td x-text="row.longitude"
-                      class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 font-bold text-left sm:px-6 lg:px-8">
-                    </td>
-                    <td x-text="row.latitude"
-                      class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 font-bold text-left sm:px-6 lg:px-8">
-                    </td>
-                    <td x-text="row.modaliteit"
-                      class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 font-bold text-left sm:px-6 lg:px-8">
-                    </td>
-                    <td x-text="row.id != '' ? row.id : 'n.v.t.' "
-                      class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-left sm:px-6 lg:px-8"></td>
-                    <td x-text="row.naam != '' ? row.naam : 'n.v.t.' "
-                      class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-left sm:px-6 lg:px-8"></td>
+                    <th
+                      class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                      Longitude
+                    </th>
+                    <th
+                      class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                      Latitude
+                    </th>
+                    <th
+                      class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                      Modaliteit
+                    </th>
+                    <th
+                      class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                      ID
+                    </th>
+                    <th
+                      class="p-4 bg-gray-50 text-left text-xs leading-4 text-gray-500 uppercase tracking-wider sm:px-6 lg:px-8 font-bold">
+                      Naam
+                    </th>
                   </tr>
-                </template>
-                <tr x-data="{show : false}">
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class="px-4 sm:px-6 lg:px-8 py-4">
-                    <button @click=" show = true " id="confirmation-btn"
-                      class=" items-center px-4 py-2 text-center text-sm leading-5 font-medium rounded-md text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:shadow-outline-green focus:border-teal-700 active:bg-teal-700 transition duration-150 ease-in-out w-full disabled:opacity-50 disabled:cursor-not-allowed">
-                      Opslaan
-                    </button>
-                    <!-- MODAL BEFORE CONFIRMING SAVE -->
-                    <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
-                      aria-modal="true" x-show="show">
-                      <div
-                        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true">
-                        </div>
-                        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
-                          aria-hidden="true">&#8203;</span>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="table-body">
+                  <template x-for="(row, index) in tempArr" :key="index">
+                    <tr class="border-b border-white">
+                      <td x-text="row.longitude"
+                        class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 font-bold text-left sm:px-6 lg:px-8">
+                      </td>
+                      <td x-text="row.latitude"
+                        class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 font-bold text-left sm:px-6 lg:px-8">
+                      </td>
+                      <td x-text="row.modaliteit"
+                        class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 font-bold text-left sm:px-6 lg:px-8">
+                      </td>
+                      <td x-text="row.id != '' ? row.id : 'n.v.t.' "
+                        class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-left sm:px-6 lg:px-8"></td>
+                      <td x-text="row.naam != '' ? row.naam : 'n.v.t.' "
+                        class="p-4 whitespace-no-wrap text-sm leading-5 text-gray-500 text-left sm:px-6 lg:px-8"></td>
+                    </tr>
+                  </template>
+                  <tr x-data="{show : false}">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="px-4 sm:px-6 lg:px-8 py-4">
+                      <button @click=" show = true " id="confirmation-btn"
+                        class=" items-center px-4 py-2 text-center text-sm leading-5 font-medium rounded-md text-white bg-teal-600 hover:bg-teal-500 focus:outline-none focus:shadow-outline-green focus:border-teal-700 active:bg-teal-700 transition duration-150 ease-in-out w-full disabled:opacity-50 disabled:cursor-not-allowed">
+                        Opslaan
+                      </button>
+                      <!-- MODAL BEFORE CONFIRMING SAVE -->
+                      <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+                        aria-modal="true" x-show="show">
                         <div
-                          class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-                          <div class="sm:flex sm:items-start">
-                            <div
-                              class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                              <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                              </svg>
-                            </div>
-                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                              <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                Weet je het zeker?
-                              </h3>
-                              <div class="mt-2">
-                                <p class="text-sm text-gray-500">
-                                  Als je de preview hebt gecontrolleerd en je wilt deze opslaan, druk dan op opslaan.
-                                </p>
+                          class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                          <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true">
+                          </div>
+                          <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                            aria-hidden="true">&#8203;</span>
+                          <div
+                            class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                            <div class="sm:flex sm:items-start">
+                              <div
+                                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                  viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                              </div>
+                              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                  Weet je het zeker?
+                                </h3>
+                                <div class="mt-2">
+                                  <p class="text-sm text-gray-500">
+                                    Als je de preview hebt gecontrolleerd en je wilt deze opslaan, druk dan op opslaan.
+                                  </p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                            <button type="button"
-                              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
-                              Opslaan
-                            </button>
-                            <button type="button"
-                              class="mt-3 w-full inline-flex justify-center rounded-md border border-red-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:w-auto sm:text-sm"
-                              @click="show = false">
-                              Cancel
-                            </button>
+                            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                              <button type="button"
+                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                Opslaan
+                              </button>
+                              <button type="button"
+                                class="mt-3 w-full inline-flex justify-center rounded-md border border-red-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:w-auto sm:text-sm"
+                                @click="show = false">
+                                Cancel
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+        <!-- TEST -->
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <div class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog"
+          aria-modal="true" id="incorrect-csv">
+          <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!--
+      Background overlay, show/hide based on modal state.
+
+      Entering: "ease-out duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+      Leaving: "ease-in duration-200"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+            <!-- This element is to trick the browser into centering the modal contents. -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <!--
+      Modal panel, show/hide based on modal state.
+
+      Entering: "ease-out duration-300"
+        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        To: "opacity-100 translate-y-0 sm:scale-100"
+      Leaving: "ease-in duration-200"
+        From: "opacity-100 translate-y-0 sm:scale-100"
+        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+    -->
+            <div
+              class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+              <div>
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                  <!-- Heroicon name: outline/check -->
+                  <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <div class="mt-3 text-center sm:mt-5">
+                  <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                    De CSV is incompleet.
+                  </h3>
+                  <div class="mt-2">
+                    <p class="text-sm text-gray-500">
+                      Controlleer de CSV, de velden <strong>longitude</strong>, <strong>latitude</strong> en <strong>modaliteit</strong> mogen niet leeg zijn.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-5 sm:mt-6">
+                <button type="button" onClick="window.location.reload();"
+                  class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
+                  Voeg een nieuwe CSV toe
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
   </main>
 
   <script type='text/javascript'>
     // CSV parser
+    let canBeUploaded = false;
     window.csvParser = () => {
       return {
         tempArr: [],
@@ -231,8 +293,15 @@
               const geoArr = [];
 
               filtered.map(filterRow => {
-                lonlat = { longitude: filterRow.longitude, latitude: filterRow.latitude, modaliteit: filterRow.modaliteit };
-                geoArr.push(lonlat);
+                if (filterRow.longitude != "" && filterRow.latitude != "" && filterRow.modaliteit != "") {
+                  lonlat = { longitude: filterRow.longitude, latitude: filterRow.latitude, modaliteit: filterRow.modaliteit };
+                  geoArr.push(lonlat);
+                  canBeUploaded = true;
+                } else {
+                  // document.getElementById('incorrect-csv').className = "fixed z-10 inset-0 overflow-y-auto"
+                  document.getElementById("incorrect-csv").classList.remove('hidden')
+                }
+                console.log(filterRow);
               });
 
               // map new geoArr and create markers for eacht row
@@ -241,6 +310,7 @@
               geoArr.map(geoArrRow => {
                 const coordinates = [geoArrRow.longitude, geoArrRow.latitude];
                 const modaliteit = geoArrRow.modaliteit;
+
                 if (modaliteit == 'fiets') {
                   const lonlatToAdd = L.circleMarker(coordinates, {
                     color: 'gray',
@@ -282,13 +352,18 @@
     }).addTo(mymap);
 
     // Disable button as long as there has no file been uploaded
-
+    // Save button
     document.getElementById('confirmation-btn').disabled = true;
     function uploadCsvForPreview() {
-      const button = document.getElementById('confirmation-btn');
-      button.disabled = false;
+      if (canBeUploaded === true) {
+        const button = document.getElementById('confirmation-btn');
+        button.disabled = false;
+      } else {
+        const button = document.getElementById('confirmation-btn');
+        button.disabled = true;
+      }
     }
-
+    // Upload button
     document.getElementById('btn-upload').disabled = true;
     function toggleDisableUpload() {
       const button = document.getElementById('btn-upload');
